@@ -5,11 +5,16 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-
+    this.state = {
+        startDate: null,
+        numberOfDays: null,
+        countryCode: null
+    }
+    this.calculate = this.calculate.bind(this);
   }
   calculate(event) {
     event.preventDefault();
-    console.log("should calculate");
+    console.log("should calculate", this.state);
   }
   render() {
       return (
@@ -17,20 +22,34 @@ class App extends Component {
             <form className="m-t-2" onSubmit={this.calculate}>
                 <div className="form-group">
                     <label>Start Date</label>
-                    <input type="date" className="form-control"/>
+                    <input 
+                        type="date" 
+                        className="form-control" 
+                        value={this.state.startDate} 
+                        onChange={(event) => this.setState({startDate: event.target.value})}/>
                 </div>
                  <div className="form-group">
                     <label>Number of days</label>
-                    <input type="numer" className="form-control" placeholder="Days"/>
+                    <input
+                        type="numer" 
+                        className="form-control" 
+                        placeholder="Days" 
+                        value={this.state.numberOfDays} 
+                        onChange={(event) => this.setState({numberOfDays: event.target.value})}/>
                 </div>
                  <div className="form-group">
                     <label>Country Code</label>
-                    <input type="text" className="form-control" placeholder="Code"/>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        placeholder="Code"
+                        value={this.state.countryCode} 
+                        onChange={(event) => this.setState({countryCode: event.target.value})}/>
                 </div>
                 <button type="submit" className="btn btn-default">Calculate</button>
             </form>
 
-            <table className="table table-hover">
+            <table className="table table-hover" style={{marginTop: 50}}>
                 <thead>
                     <tr>
                         <th>S</th>

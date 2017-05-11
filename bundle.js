@@ -77,18 +77,28 @@
 	    function App(props) {
 	        _classCallCheck(this, App);
 
-	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	        _this.state = {
+	            startDate: null,
+	            numberOfDays: null,
+	            countryCode: null
+	        };
+	        _this.calculate = _this.calculate.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(App, [{
 	        key: 'calculate',
 	        value: function calculate(event) {
 	            event.preventDefault();
-	            console.log("should calculate");
+	            console.log("should calculate", this.state);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { style: { marginTop: 50 } },
@@ -103,7 +113,13 @@
 	                            null,
 	                            'Start Date'
 	                        ),
-	                        _react2.default.createElement('input', { type: 'date', className: 'form-control' })
+	                        _react2.default.createElement('input', {
+	                            type: 'date',
+	                            className: 'form-control',
+	                            value: this.state.startDate,
+	                            onChange: function onChange(event) {
+	                                return _this2.setState({ startDate: event.target.value });
+	                            } })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -113,7 +129,14 @@
 	                            null,
 	                            'Number of days'
 	                        ),
-	                        _react2.default.createElement('input', { type: 'numer', className: 'form-control', placeholder: 'Days' })
+	                        _react2.default.createElement('input', {
+	                            type: 'numer',
+	                            className: 'form-control',
+	                            placeholder: 'Days',
+	                            value: this.state.numberOfDays,
+	                            onChange: function onChange(event) {
+	                                return _this2.setState({ numberOfDays: event.target.value });
+	                            } })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -123,7 +146,14 @@
 	                            null,
 	                            'Country Code'
 	                        ),
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Code' })
+	                        _react2.default.createElement('input', {
+	                            type: 'text',
+	                            className: 'form-control',
+	                            placeholder: 'Code',
+	                            value: this.state.countryCode,
+	                            onChange: function onChange(event) {
+	                                return _this2.setState({ countryCode: event.target.value });
+	                            } })
 	                    ),
 	                    _react2.default.createElement(
 	                        'button',
@@ -133,7 +163,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'table',
-	                    { className: 'table table-hover' },
+	                    { className: 'table table-hover', style: { marginTop: 50 } },
 	                    _react2.default.createElement(
 	                        'thead',
 	                        null,
