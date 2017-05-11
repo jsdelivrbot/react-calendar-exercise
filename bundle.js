@@ -72,26 +72,70 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var App = function (_Component) {
-	  _inherits(App, _Component);
+	    _inherits(App, _Component);
 
-	  function App(props) {
-	    _classCallCheck(this, App);
+	    function App(props) {
+	        _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-	  }
-
-	  _createClass(App, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Hello World!!!'
-	      );
+	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	    }
-	  }]);
 
-	  return App;
+	    _createClass(App, [{
+	        key: 'calculate',
+	        value: function calculate(event) {
+	            event.preventDefault();
+	            console.log("should calculate");
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { marginTop: 50 } },
+	                _react2.default.createElement(
+	                    'form',
+	                    { className: 'm-t-2', onSubmit: this.calculate },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Start Date'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'date', className: 'form-control' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Number of days'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'numer', className: 'form-control', placeholder: 'Days' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Country Code'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Code' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { type: 'submit', className: 'btn btn-default' },
+	                        'Calculate'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return App;
 	}(_react.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('.container'));
