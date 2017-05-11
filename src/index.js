@@ -29,7 +29,7 @@ class App extends Component {
     let renderedDays = [];
     while(endDate.isAfter(currentDate)) {
         let currentMonth = currentDate.month();
-        let currentMonthText = currentDate.format('MMM');
+        let currentMonthText = currentDate.format('MMM YYYY');
         while(currentMonth === currentDate.month() && endDate.isAfter(currentDate)) {
             for(var i = 0; i <= 6; i++) {
                 if(currentDate.day() !== i) {

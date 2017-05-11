@@ -86,7 +86,8 @@
 	        _this.state = {
 	            startDate: null,
 	            numberOfDays: null,
-	            countryCode: null
+	            countryCode: null,
+	            endDate: null
 	        };
 	        _this.calculate = _this.calculate.bind(_this);
 	        return _this;
@@ -103,93 +104,111 @@
 	        value: function renderCalendar() {
 	            var currentDate = (0, _moment2.default)(this.state.startDate);
 	            var endDate = (0, _moment2.default)(this.state.startDate).add(this.state.numberOfDays, 'days');
+	            var days = [0, 1, 2, 3, 4, 5, 6];
 
-	            return _react2.default.createElement(
-	                'table',
-	                { className: 'table table-hover', style: { marginTop: 50 } },
-	                _react2.default.createElement(
-	                    'thead',
-	                    null,
-	                    _react2.default.createElement(
+	            var renderedMonths = [];
+	            var renderedWeeks = [];
+	            var renderedDays = [];
+	            while (endDate.isAfter(currentDate)) {
+	                var currentMonth = currentDate.month();
+	                var currentMonthText = currentDate.format('MMM YYYY');
+	                while (currentMonth === currentDate.month() && endDate.isAfter(currentDate)) {
+	                    for (var i = 0; i <= 6; i++) {
+	                        if (currentDate.day() !== i) {
+	                            renderedDays.push(_react2.default.createElement('td', { className: 'invalid' }));
+	                        } else if (currentDate.day() === i && endDate.isAfter(currentDate) && currentMonth === currentDate.month()) {
+	                            renderedDays.push(_react2.default.createElement(
+	                                'td',
+	                                { className: i === 0 || i === 6 ? "weekend" : "weekday" },
+	                                currentDate.date()
+	                            ));
+	                            currentDate.add(1, 'days');
+	                        } else {
+	                            renderedDays.push(_react2.default.createElement('td', { className: 'invalid' }));
+	                        }
+	                    }
+
+	                    renderedWeeks.push(_react2.default.createElement(
 	                        'tr',
 	                        null,
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'S'
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'M'
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'T'
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'W'
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'T'
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'F'
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            'S'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'tbody',
-	                    null,
+	                        renderedDays.map(function (d) {
+	                            return d;
+	                        })
+	                    ));
+	                    renderedDays = [];
+	                }
+
+	                renderedMonths.push(_react2.default.createElement(
+	                    'table',
+	                    { className: 'table table-hover', style: { marginTop: 50 } },
 	                    _react2.default.createElement(
-	                        'tr',
-	                        { style: { textAlign: 'center' } },
+	                        'thead',
+	                        null,
 	                        _react2.default.createElement(
-	                            'td',
-	                            { colSpan: '7' },
-	                            currentDate.format('MMM')
+	                            'tr',
+	                            null,
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'S'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'M'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'T'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'W'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'T'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'F'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'S'
+	                            )
 	                        )
 	                    ),
-	                    this.renderWeek(currentDate, endDate)
-	                )
-	            );
-	        }
-	    }, {
-	        key: 'renderWeek',
-	        value: function renderWeek(currentDate, endDate) {
-	            var days = [0, 1, 2, 3, 4, 5, 6];
-	            var renderedDays = [];
-	            for (var i = 0; i <= 6; i++) {
-	                if (currentDate.day() !== i) {
-	                    renderedDays.push(_react2.default.createElement('td', { className: 'invalid' }));
-	                } else if (currentDate.day() === i && endDate.isAfter(currentDate)) {
-	                    renderedDays.push(_react2.default.createElement(
-	                        'td',
+	                    _react2.default.createElement(
+	                        'tbody',
 	                        null,
-	                        currentDate.date()
-	                    ));
-	                    currentDate.add(1, 'days');
-	                } else {
-	                    renderedDays.push(_react2.default.createElement('td', { className: 'invalid' }));
-	                }
+	                        _react2.default.createElement(
+	                            'tr',
+	                            { style: { textAlign: 'center' } },
+	                            _react2.default.createElement(
+	                                'td',
+	                                { colSpan: '7' },
+	                                currentMonthText
+	                            )
+	                        ),
+	                        renderedWeeks.map(function (w) {
+	                            return w;
+	                        })
+	                    )
+	                ));
+	                renderedWeeks = [];
 	            }
+
 	            return _react2.default.createElement(
-	                'tr',
+	                'div',
 	                null,
-	                renderedDays.map(function (d) {
-	                    return d;
+	                renderedMonths.map(function (m) {
+	                    return m;
 	                })
 	            );
 	        }
