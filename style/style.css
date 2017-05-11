@@ -1,3 +1,9 @@
 .invalid {
-    background-color: gray
+    background-color: gray;
+}
+.weekend {
+    background-color: yellow;
+}
+.weekday {
+    background-color: green;
 }

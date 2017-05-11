@@ -33,12 +33,12 @@ class App extends Component {
         while(currentMonth === currentDate.month() && endDate.isAfter(currentDate)) {
             for(var i = 0; i <= 6; i++) {
                 if(currentDate.day() !== i) {
-                renderedDays.push(<td className="invalid"></td>);
+                    renderedDays.push(<td className={i === 0 || i === 6 ? "invalid weekend" : "invalid" }></td>);
                 } else if (currentDate.day() === i && endDate.isAfter(currentDate) && currentMonth === currentDate.month()){
-                    renderedDays.push(<td>{currentDate.date()}</td>);          
+                    renderedDays.push(<td className={i === 0 || i === 6 ? "weekend" : "weekday" }>{currentDate.date()}</td>);          
                     currentDate.add(1, 'days');
                 } else {
-                    renderedDays.push(<td className="invalid"></td>);
+                    renderedDays.push(<td className={i === 0 || i === 6 ? "invalid weekend" : "invalid" }></td>);
                 }
             }
         
