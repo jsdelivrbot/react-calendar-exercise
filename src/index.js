@@ -22,52 +22,67 @@ class App extends Component {
   renderCalendar() {
     let currentDate = moment(this.state.startDate);
     let endDate = moment(this.state.startDate).add(this.state.numberOfDays, 'days');
-
     const days = [0,1,2,3,4,5,6];
+    
+    let renderedMonths = [];
+    let renderedWeeks = [];
     let renderedDays = [];
-    let weeks = [];
     while(endDate.isAfter(currentDate)) {
-        for(var i = 0; i <= 6; i++) {
-            if(currentDate.day() !== i) {
-            renderedDays.push(<td className="invalid"></td>);
-            } else if (currentDate.day() === i && endDate.isAfter(currentDate)){
-                renderedDays.push(<td>{currentDate.date()}</td>);          
-                currentDate.add(1, 'days');
-            } else {
+        let currentMonth = currentDate.month();
+        let currentMonthText = currentDate.format('MMM');
+        while(currentMonth === currentDate.month() && endDate.isAfter(currentDate)) {
+            for(var i = 0; i <= 6; i++) {
+                if(currentDate.day() !== i) {
                 renderedDays.push(<td className="invalid"></td>);
+                } else if (currentDate.day() === i && endDate.isAfter(currentDate) && currentMonth === currentDate.month()){
+                    renderedDays.push(<td>{currentDate.date()}</td>);          
+                    currentDate.add(1, 'days');
+                } else {
+                    renderedDays.push(<td className="invalid"></td>);
+                }
             }
-        }
         
-        weeks.push(<tr>
-            {renderedDays.map((d)=>{
-                return d;
-            })}
-            </tr>);
-        renderedDays = [];
+            renderedWeeks.push(<tr>
+                {renderedDays.map((d)=>{
+                    return d;
+                })}
+                </tr>);
+            renderedDays = [];
+      }
+
+        renderedMonths.push (
+             <table className="table table-hover" style={{marginTop: 50}}>
+                <thead>
+                    <tr>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>T</th>
+                        <th>W</th>
+                        <th>T</th>
+                        <th>F</th>
+                        <th>S</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style={{textAlign: 'center'}}>
+                        <td colSpan="7" >{currentMonthText}</td>
+                    </tr>
+                    {renderedWeeks.map((w)=>{
+                        return w;
+                    })}
+                </tbody>
+            </table>
+        )
+        renderedWeeks = [];
+        
     }
 
     return(
-    <table className="table table-hover" style={{marginTop: 50}}>
-        <thead>
-            <tr>
-                <th>S</th>
-                <th>M</th>
-                <th>T</th>
-                <th>W</th>
-                <th>T</th>
-                <th>F</th>
-                <th>S</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr style={{textAlign: 'center'}}>
-                <td colSpan="7" >{currentDate.format('MMM')}</td>
-            </tr>
-            {weeks.map((w)=>{
-                return w;
+        <div>
+            {renderedMonths.map((m)=>{
+                return m;
             })}
-        </tbody>
-    </table>
+        </div>
     )
   }
   
