@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 
 class App extends Component {
 
@@ -16,6 +17,56 @@ class App extends Component {
     event.preventDefault();
     console.log("should calculate", this.state);
   }
+  
+  renderCalendar() {
+    let currentDate = moment(this.state.startDate);
+    let endDate = moment(this.state.startDate).add(this.state.numberOfDays, 'days');
+
+    return(
+    <table className="table table-hover" style={{marginTop: 50}}>
+        <thead>
+            <tr>
+                <th>S</th>
+                <th>M</th>
+                <th>T</th>
+                <th>W</th>
+                <th>T</th>
+                <th>F</th>
+                <th>S</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style={{textAlign: 'center'}}>
+                <td colSpan="7" >{currentDate.format('MMM')}</td>
+            </tr>
+            { this.renderWeek(currentDate, endDate) }
+        </tbody>
+    </table>
+    )
+  }
+
+  renderWeek(currentDate, endDate) {
+      const days = [0,1,2,3,4,5,6];
+      let renderedDays = [];
+      for(var i = 0; i <= 6; i++) {
+        if(currentDate.day() !== i) {
+          renderedDays.push(<td className="invalid"></td>);
+        } else if (currentDate.day() === i && endDate.isAfter(currentDate)){
+          renderedDays.push(<td>{currentDate.date()}</td>);
+          currentDate.add(1, 'days');
+        } else {
+          renderedDays.push(<td className="invalid"></td>);
+        }
+      }
+      return (
+        <tr>
+            {renderedDays.map((d)=>{
+                return d;
+            })}
+        </tr>
+      )      
+  }
+
   render() {
       return (
         <div style={{marginTop: 50}}>
@@ -48,53 +99,7 @@ class App extends Component {
                 </div>
                 <button type="submit" className="btn btn-default">Calculate</button>
             </form>
-
-            <table className="table table-hover" style={{marginTop: 50}}>
-                <thead>
-                    <tr>
-                        <th>S</th>
-                        <th>M</th>
-                        <th>T</th>
-                        <th>W</th>
-                        <th>T</th>
-                        <th>F</th>
-                        <th>S</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style={{textAlign: 'center'}}>
-                        <td colSpan="7" >Month Here</td>
-                    </tr>
-                    <tr>
-                        <td>S</td>
-                        <td>M</td>
-                        <td>T</td>
-                        <td>W</td>
-                        <td>T</td>
-                        <td>F</td>
-                        <td>S</td>
-                    </tr>
-                     <tr>
-                        <td>S</td>
-                        <td>M</td>
-                        <td>T</td>
-                        <td>W</td>
-                        <td>T</td>
-                        <td>F</td>
-                        <td>S</td>
-                    </tr>
-                     <tr>
-                        <td>S</td>
-                        <td>M</td>
-                        <td>T</td>
-                        <td>W</td>
-                        <td>T</td>
-                        <td>F</td>
-                        <td>S</td>
-                    </tr>
-                </tbody>
-            </table>
-
+            { this.renderCalendar() }
         </div>
         
     );
