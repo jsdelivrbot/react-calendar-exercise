@@ -12,17 +12,11 @@ class App extends Component {
         countryCode: null,
         endDate: null
     }
-    this.calculate = this.calculate.bind(this);
-  }
-  calculate(event) {
-    event.preventDefault();
-    console.log("should calculate", this.state);
   }
   
   renderCalendar() {
     let currentDate = moment(this.state.startDate);
     let endDate = moment(this.state.startDate).add(this.state.numberOfDays, 'days');
-    const days = [0,1,2,3,4,5,6];
     
     let renderedMonths = [];
     let renderedWeeks = [];
@@ -89,7 +83,7 @@ class App extends Component {
   render() {
       return (
         <div style={{marginTop: 50}}>
-            <form className="m-t-2" onSubmit={this.calculate}>
+            <form className="m-t-2">
                 <div className="form-group">
                     <label>Start Date</label>
                     <input 
@@ -116,7 +110,6 @@ class App extends Component {
                         value={this.state.countryCode} 
                         onChange={(event) => this.setState({countryCode: event.target.value})}/>
                 </div>
-                <button type="submit" className="btn btn-default">Calculate</button>
             </form>
             { this.renderCalendar() }
         </div>

@@ -89,22 +89,14 @@
 	            countryCode: null,
 	            endDate: null
 	        };
-	        _this.calculate = _this.calculate.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(App, [{
-	        key: 'calculate',
-	        value: function calculate(event) {
-	            event.preventDefault();
-	            console.log("should calculate", this.state);
-	        }
-	    }, {
 	        key: 'renderCalendar',
 	        value: function renderCalendar() {
 	            var currentDate = (0, _moment2.default)(this.state.startDate);
 	            var endDate = (0, _moment2.default)(this.state.startDate).add(this.state.numberOfDays, 'days');
-	            var days = [0, 1, 2, 3, 4, 5, 6];
 
 	            var renderedMonths = [];
 	            var renderedWeeks = [];
@@ -222,7 +214,7 @@
 	                { style: { marginTop: 50 } },
 	                _react2.default.createElement(
 	                    'form',
-	                    { className: 'm-t-2', onSubmit: this.calculate },
+	                    { className: 'm-t-2' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'form-group' },
@@ -272,11 +264,6 @@
 	                            onChange: function onChange(event) {
 	                                return _this2.setState({ countryCode: event.target.value });
 	                            } })
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'submit', className: 'btn btn-default' },
-	                        'Calculate'
 	                    )
 	                ),
 	                this.renderCalendar()
