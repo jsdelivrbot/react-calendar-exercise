@@ -9,7 +9,8 @@ class App extends Component {
     this.state = {
         startDate: null,
         numberOfDays: null,
-        countryCode: null
+        countryCode: null,
+        endDate: null
     }
     this.calculate = this.calculate.bind(this);
   }
@@ -21,6 +22,29 @@ class App extends Component {
   renderCalendar() {
     let currentDate = moment(this.state.startDate);
     let endDate = moment(this.state.startDate).add(this.state.numberOfDays, 'days');
+
+    const days = [0,1,2,3,4,5,6];
+    let renderedDays = [];
+    let weeks = [];
+    while(endDate.isAfter(currentDate)) {
+        for(var i = 0; i <= 6; i++) {
+            if(currentDate.day() !== i) {
+            renderedDays.push(<td className="invalid"></td>);
+            } else if (currentDate.day() === i && endDate.isAfter(currentDate)){
+                renderedDays.push(<td>{currentDate.date()}</td>);          
+                currentDate.add(1, 'days');
+            } else {
+                renderedDays.push(<td className="invalid"></td>);
+            }
+        }
+        
+        weeks.push(<tr>
+            {renderedDays.map((d)=>{
+                return d;
+            })}
+            </tr>);
+        renderedDays = [];
+    }
 
     return(
     <table className="table table-hover" style={{marginTop: 50}}>
@@ -39,34 +63,14 @@ class App extends Component {
             <tr style={{textAlign: 'center'}}>
                 <td colSpan="7" >{currentDate.format('MMM')}</td>
             </tr>
-            { this.renderWeek(currentDate, endDate) }
+            {weeks.map((w)=>{
+                return w;
+            })}
         </tbody>
     </table>
     )
   }
-
-  renderWeek(currentDate, endDate) {
-      const days = [0,1,2,3,4,5,6];
-      let renderedDays = [];
-      for(var i = 0; i <= 6; i++) {
-        if(currentDate.day() !== i) {
-          renderedDays.push(<td className="invalid"></td>);
-        } else if (currentDate.day() === i && endDate.isAfter(currentDate)){
-          renderedDays.push(<td>{currentDate.date()}</td>);
-          currentDate.add(1, 'days');
-        } else {
-          renderedDays.push(<td className="invalid"></td>);
-        }
-      }
-      return (
-        <tr>
-            {renderedDays.map((d)=>{
-                return d;
-            })}
-        </tr>
-      )      
-  }
-
+  
   render() {
       return (
         <div style={{marginTop: 50}}>
